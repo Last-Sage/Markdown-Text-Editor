@@ -1,11 +1,29 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Editor from '../components/Editor.astro';
+import Preview from '../components/Preview.astro';
+import Toolbar from '../components/Toolbar.astro';
+import Actions from '../components/Actions.astro';
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Markdown Editor">
+  <div class="app-container">
+    <header class="container flex justify-between items-center py-16">
+      <h1>Markdown Editor</h1>
+      <button id="themeToggle" class="btn btn--secondary" aria-label="Toggle dark mode">🌙</button>
+    </header>
+
+    <main class="container editor-main">
+      <Toolbar />
+      
+      <div class="split flex gap-16 mb-16">
+        <Editor />
+        <Preview />
+      </div>
+
+      <Actions />
+    </main>
+  </div>
+
+  <script src="/src/scripts/editor.js"></script>
 </Layout>
