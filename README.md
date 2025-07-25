@@ -2,7 +2,7 @@
 
 A modern, fast, and beautiful Markdown editor built with [Astro](https://astro.build) featuring real-time preview, dark mode, and zero dependencies for the core functionality.
 
-![Markdown Editor Screenshot](https://via.placeholder.com/800x400?text=Markdown+Editor+Screenshot)
+<!-- ![Markdown Editor Screenshot](https://via.placeholder.com/800x400?text=Markdown+Editor+Screenshot) -->
 
 ## ✨ Features
 
@@ -201,9 +201,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 If you have any questions or need help, please:
 
-- Open an [issue](https://github.com/yourusername/markdown-editor/issues)
-- Contact via email: your.email@example.com
-- Join our [Discord community](https://discord.gg/yourinvite)
+- Open an [issue](https://github.com/Last-sage/markdown-editor/issues)
+- Contact via email: lastsage@consolecats.com
 
 ---
 
