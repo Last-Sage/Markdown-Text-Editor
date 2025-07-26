@@ -1138,3 +1138,294 @@
     justify-content: center;
     height: 100%;
   }
+
+  /* PWA-specific styles - Add to existing style.css */
+
+/* PWA Install and Update buttons */
+.install-btn,
+.update-btn {
+  transition: all var(--duration-normal) var(--ease-standard);
+  position: relative;
+  overflow: hidden;
+}
+
+.install-btn::before,
+.update-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left var(--duration-normal) var(--ease-standard);
+}
+
+.install-btn:hover::before,
+.update-btn:hover::before {
+  left: 100%;
+}
+
+.update-btn {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* Network status indicator */
+.network-status {
+  display: flex;
+  align-items: center;
+  margin-left: var(--space-16);
+}
+
+.network-status .status {
+  font-size: var(--font-size-xs);
+  padding: var(--space-4) var(--space-8);
+  border-radius: var(--radius-full);
+  font-weight: var(--font-weight-medium);
+}
+
+/* PWA notifications */
+.pwa-notification {
+  animation: slideInRight 0.3s var(--ease-standard);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Standalone app adjustments */
+@media (display-mode: standalone) {
+  /* Add padding for status bar on mobile devices */
+  .app-container {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  
+  /* Hide install button when running as standalone */
+  .install-btn {
+    display: none !important;
+  }
+  
+  /* Adjust header for standalone mode */
+  header {
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+}
+
+/* iOS Safari specific adjustments */
+@supports (-webkit-touch-callout: none) {
+  @media (display-mode: standalone) {
+    .app-container {
+      padding-top: max(env(safe-area-inset-top), 20px);
+    }
+  }
+}
+
+/* Enhanced mobile experience for PWA */
+@media (max-width: 768px) {
+  /* Larger touch targets for mobile */
+  .toolbar-btn {
+    min-width: 44px;
+    height: 44px;
+    touch-action: manipulation;
+  }
+  
+  .btn {
+    min-height: 44px;
+    touch-action: manipulation;
+  }
+  
+  /* Better spacing for mobile */
+  .actions {
+    position: sticky;
+    bottom: 0;
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    margin: 0 calc(var(--space-16) * -1);
+    padding: var(--space-12) var(--space-16);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  
+  /* Mobile-optimized split view */
+  .split {
+    flex-direction: column;
+    gap: var(--space-12);
+  }
+  
+  .pane {
+    min-height: 200px;
+  }
+  
+  .pane--editor {
+    order: 1;
+  }
+  
+  .pane--preview {
+    order: 2;
+    max-height: 300px;
+  }
+  
+  /* Network indicator on mobile */
+  .network-status {
+    margin-left: auto;
+    margin-right: var(--space-8);
+  }
+}
+
+/* Keyboard shortcuts help (hidden by default) */
+.shortcuts-help {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-24);
+  box-shadow: var(--shadow-lg);
+  z-index: 1000;
+  display: none;
+  max-width: 400px;
+  width: 90vw;
+}
+
+.shortcuts-help.visible {
+  display: block;
+}
+
+.shortcuts-help h3 {
+  margin-top: 0;
+  margin-bottom: var(--space-16);
+  color: var(--color-text);
+}
+
+.shortcuts-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.shortcuts-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-8) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.shortcuts-list li:last-child {
+  border-bottom: none;
+}
+
+.shortcut-key {
+  font-family: var(--font-family-mono);
+  background: var(--color-secondary);
+  padding: var(--space-2) var(--space-6);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+}
+
+/* Loading states */
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+  position: relative;
+}
+
+.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid var(--color-border);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Error states */
+.error {
+  color: var(--color-error);
+  background: rgba(var(--color-error-rgb), 0.1);
+  padding: var(--space-12);
+  border-radius: var(--radius-base);
+  border: 1px solid rgba(var(--color-error-rgb), 0.2);
+}
+
+/* Success feedback */
+.success-feedback {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--color-success);
+  color: var(--color-btn-primary-text);
+  padding: var(--space-12) var(--space-16);
+  border-radius: var(--radius-base);
+  box-shadow: var(--shadow-lg);
+  z-index: 1000;
+  animation: slideInRight 0.3s var(--ease-standard);
+}
+
+/* Enhanced focus styles for accessibility */
+.btn:focus-visible,
+.toolbar-btn:focus-visible,
+.form-control:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(var(--color-teal-500-rgb), 0.2);
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .btn,
+  .toolbar-btn,
+  .form-control {
+    border-width: 2px;
+  }
+  
+  .status {
+    border-width: 2px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .update-btn {
+    animation: none;
+  }
+}
